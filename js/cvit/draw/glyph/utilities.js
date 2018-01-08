@@ -102,7 +102,7 @@ define( [ 'jquery', 'bootstrap' ],
 	var layer = paper.project.layers[0];
 	var length = baseGroup.children.length;
         var offset = feature.strokeBounds.width + pGap;
-        while ( testItem.length > minGroup ) {
+        while ( testItem.length > minGroup  && testItem[0].parent.parent) {
           var testPName = testItem[0].parent.parent.name;
 	  if(fPName != testPName){
 

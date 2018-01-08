@@ -225,7 +225,7 @@ define( [ 'jquery', 'json!cvitjs/ConfDefault.json' ],
                 parsedFile[ currentConfigKey ] = parsedFile[ currentConfigKey ] === undefined ? {} : parsedFile[ currentConfigKey ];
               } else {
                 confItem = element.split( '=' );
-                if ( confItem[ 1 ].trim() !== '' ) {
+                if (confItem[1] &&  confItem[ 1 ].trim() !== '' ) {
                   parsedFile[ currentConfigKey ][ confItem[ 0 ].trim() ] = confItem[ 1 ].trim();
                 }
               }
