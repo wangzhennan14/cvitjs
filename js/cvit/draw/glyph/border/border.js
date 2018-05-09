@@ -5,7 +5,7 @@
  *
  */
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
 
     return /** @alias module:draw/glyph/border */ {
@@ -16,7 +16,7 @@ define(["jquery", "glyph/utilities"],
        */
 
       test: function () {
-        console.log("Test of border glyph");
+        console.log('Test of border glyph');
       },
 
       /**
@@ -38,7 +38,7 @@ define(["jquery", "glyph/utilities"],
             var g = new paper.Group();
             g.name = gName;
             var labelGroup = new paper.Group();
-            labelGroup.name = gName + "-label";
+            labelGroup.name = gName + '-label';
             targetGroup.addChild(g);
             g.addChild(labelGroup);
           }
@@ -53,8 +53,8 @@ define(["jquery", "glyph/utilities"],
           var r = new paper.Path.Rectangle(point, size);
           r.position.x = xLoc;
           r.info = border.attribute;
-          border.name = r.info.name ? r.info.name : "";
-          r.thisColor = "black";
+          border.name = r.info.name ? r.info.name : '';
+          r.thisColor = 'black';
           if (parseInt(view.config.fill) === 1) {
             var fillColor = r.info.color ? r.info.color : view.config.color;
             r.fillColor = utility.formatColor(fillColor);
@@ -68,7 +68,7 @@ define(["jquery", "glyph/utilities"],
           if (parseInt(view.config.draw_label) === 1) {
             point.y = r.position.y;
             var label = utility.generateLabel(r, view, targetGroup.children[target]);
-            featureGroup.children[gName + "-label"].addChild(label);
+            featureGroup.children[gName + '-label'].addChild(label);
             label.bringToFront();
           }
           featureGroup.addChild(r);

@@ -7,7 +7,7 @@
  */
 
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
     return /** @alias module:draw/glyph/position/doublecircle */ {
 
@@ -17,7 +17,7 @@ define(["jquery", "glyph/utilities"],
        */
 
       test: function () {
-        console.log("Test of position class");
+        console.log('Test of position class');
       },
 
       /**
@@ -40,7 +40,7 @@ define(["jquery", "glyph/utilities"],
             g.name = gName;
             targetGroup.addChild(g);
             var lGroup = new paper.Group();
-            lGroup.name = gName + "-label";
+            lGroup.name = gName + '-label';
             g.addChild(lGroup);
           }
           var featureGroup = targetGroup.children[gName];
@@ -64,7 +64,7 @@ define(["jquery", "glyph/utilities"],
             ]
           });
 
-          position.name = position.attribute.name ? position.attribute.name : "";
+          position.name = position.attribute.name ? position.attribute.name : '';
           r.info = position.attribute;
           var fillColor = position.attribute.color ? position.attribute.color : view.config.color;
           r.fillColor = utility.formatColor(fillColor);
@@ -77,7 +77,7 @@ define(["jquery", "glyph/utilities"],
           if (parseInt(view.config.draw_label) === 1) {
             point.y = r.position.y;
             var label = utility.generateLabel(r, view, targetGroup.children[target]);
-            featureGroup.children[gName + "-label"].addChild(label);
+            featureGroup.children[gName + '-label'].addChild(label);
             label.bringToFront();
           }
           featureGroup.addChild(r);

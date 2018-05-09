@@ -6,7 +6,7 @@
  */
 
 
-define(["bootstrap"],
+define(['bootstrap'],
   function () {
     return /** @alias module:tools/draw/free */ {
 

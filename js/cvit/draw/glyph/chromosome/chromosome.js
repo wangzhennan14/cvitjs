@@ -6,7 +6,7 @@
  */
 
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
 
     return /** @alias module:draw/glyph/chromosome */ {
@@ -17,7 +17,7 @@ define(["jquery", "glyph/utilities"],
        */
 
       test: function () {
-        console.log("Test of centromere glyph");
+        console.log('Test of centromere glyph');
       },
 
       /**
@@ -31,12 +31,12 @@ define(["jquery", "glyph/utilities"],
 
       draw: function (data, config, view) {
         var thisC = this;
-        console.log("CViTjs: Drawing chromosome backbone.");
+        console.log('CViTjs: Drawing chromosome backbone.');
         var cGroup = new paper.Group();
         //var view = {};
         var chromosomes = data.chromosome.features;
         view.config = config.general;
-        cGroup.name = "chromosomeBackbone";
+        cGroup.name = 'chromosomeBackbone';
         //view.zoom = data.zoom;
         //view.xoffset = Math.floor( ( $( '#cvit-canvas' ).width() - 200 ) / chromosomes.length );
         //view.yoffset = 50;
@@ -45,7 +45,7 @@ define(["jquery", "glyph/utilities"],
         if (config.fixed_chrom_spacing === 1) {
           view.xSep = minSep;
         } else {
-          view.xSep = ($("#cvit-canvas").width() - (2 * view.rulerWidth) - (chromosomes.length * view.chromWidth)) / (chromosomes.length + 1);
+          view.xSep = ($('#cvit-canvas').width() - (2 * view.rulerWidth) - (chromosomes.length * view.chromWidth)) / (chromosomes.length + 1);
           view.sSep = view.xSep > minSep ? view.xSep : minSep;
         }
         chromosomes.forEach(function (chromosome) {
@@ -83,7 +83,7 @@ define(["jquery", "glyph/utilities"],
         var r = new paper.Path.Rectangle(rectangle);
         chr.name = chromosome.seqName;
         r.info = chromosome.attribute;
-        r.thisColor = "black";
+        r.thisColor = 'black';
         r.fillColor = utility.formatColor(view.config.chrom_color);
         if (parseInt(view.config.chrom_border) === 1) {
           r.strokeWidth = 2;
@@ -97,11 +97,11 @@ define(["jquery", "glyph/utilities"],
         point.y = yPos - view.chromWidth;
 
         var label = new paper.PointText(point);
-        label.justification = "center";
+        label.justification = 'center';
         label.content = chr.name;
         label.fontSize = parseInt(view.config.chrom_font_size);
         label.fillColor = utility.formatColor(view.config.chrom_label_color);
-        label.name = chr.name + "Label";
+        label.name = chr.name + 'Label';
         return chr;
       }
     };

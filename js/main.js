@@ -8,11 +8,11 @@
  *
  */
 
-require(["jquery", "cvit/cvit", "cvit/file/file"], function ($, cvit, file) {
-    console.log("CViTjs: Starting CViTJS");
+require(['jquery', 'cvit/cvit', 'cvit/file/file'], function ($, cvit, file) {
+    console.log('CViTjs: Starting CViTJS');
     // cvit.init(dataset) to have the provided dataset
     //override defaults or URI string
-    var passedData = document.getElementById("cvit-div");
+    var passedData = document.getElementById('cvit-div');
     var dataset = passedData.dataset.backbone ? passedData.dataset.backbone : undefined;
 
     var gff = passedData.dataset.gff ? file.getFile(passedData.dataset.gff) : undefined;
@@ -26,11 +26,11 @@ require(["jquery", "cvit/cvit", "cvit/file/file"], function ($, cvit, file) {
       },
       function (err) {
         console.log(err);
-        document.getElementById("cvit-div").innerHTML = err.message;
+        document.getElementById('cvit-div').innerHTML = err.message;
       });
   },
   function (err) {
     console.log(err);
-    document.getElementById("cvit-div").innerHTML = err.message;
+    document.getElementById('cvit-div').innerHTML = err.message;
   }
 );

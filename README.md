@@ -59,14 +59,14 @@ For each dataset you will need a <a href="http://gmod.org/wiki/GFF3">GFF3</a> fi
 
 Instead of keeping CViTjs in its own special page, it may be embedded to show related data. In the page's head include:
 ```
-<link rel="stylesheet" href="[pathToCViTjs]/js/lib/bootstrap_embed/css/bootstrap.min.css" />
-<link rel="stylesheet" href="[pathToCViTjs]/js/lib/hopscotch/css/hopscotch.min.css" />
+<link rel="stylesheet" href="[pathToCViTjs]/vendor/bootstrap_embed/css/bootstrap.min.css" />
+<link rel="stylesheet" href="[pathToCViTjs]/vendor/hopscotch/css/hopscotch.min.css" />
 <link rel="stylesheet" href="[pathToCViTjs]/css/cvit.css" />
 
-<script data-main="[pathToCViTjs]/js/lib/require/require-embed-config" src="[pathToCViTjs]/js/lib/require/require.js"></script>
+<script data-main="[pathToCViTjs]/js/require-config/require-embed-config" src="[pathToCViTjs]/vendor/require/require.js"></script>
 ```
 If you wish to use an alternative main.js entry point, you will have to edit require-config. 
-Replace the value in: `deps: ["../main"]` with the path to your custom main.js entry point, relative to the libs directory.
+Replace the value in: `deps: ["../js/main"]` with the path to your custom main.js entry point, relative to the libs directory.
 
 In the body of the page, all that is required is to place a `<div id="cvit-div">` at the location you want to add CViTjs. By default this will display the default view set in the [general] section of the cvit.conf. If you wish to override this display, CViTjs recognises two `data-` attributes by default:
 ```

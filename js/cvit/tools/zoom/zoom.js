@@ -5,7 +5,7 @@
  *
  */
 
-define(["jquery", "mousewheel"],
+define(['jquery', 'mousewheel'],
   function ($) {
 
     return /** @alias module:tools/zoom */ {
@@ -17,15 +17,15 @@ define(["jquery", "mousewheel"],
 
       addZoomControl: function () {
         var thisC = this;
-        var zoomGroup = $("<div id=\"zoom-ctrl\" class=\"btn-group-vertical btn-group-xs\" role=\"group\" aria-label=\"Zoom controls\">");
-        $(zoomGroup).css("top", "10px");
-        $(zoomGroup).css("left", "10px");
-        var zIn = $("<button title=\"Zoom In\" type=\"button\" id=\"zoom-in-btn\" class=\"btn btn-default z-ctrl\" aria-label=\"Zoom in\"></button>");
-        $(zIn).append("<span \" class=\"glyphicon glyphicon-plus \" aria-hidden=\"true\"></span>");
-        var zOut = $("<button title=\"Zoom Out\" id=\"zoom-out-btn\" type=\"button\" class=\"btn btn-default z-crtl\" aria-label=\"Zoom out\" disabled=\"true\"></button>");
-        $(zOut).append("<span class=\"glyphicon glyphicon-minus\" aria-hidden=\"true\"></span>");
-        var zReset = $("<button title=\"Reset View\" type=\"button\" class=\"btn btn-default\" aria-label=\"Reset zoom\"></button>");
-        $(zReset).append("<span class=\"glyphicon glyphicon-refresh\" aria-hidden=\"true\"></span>");
+        var zoomGroup = $('<div id="zoom-ctrl" class="btn-group-vertical btn-group-xs" role="group" aria-label="Zoom controls">');
+        $(zoomGroup).css('top', '10px');
+        $(zoomGroup).css('left', '10px');
+        var zIn = $('<button title="Zoom In" type="button" id="zoom-in-btn" class="btn btn-default z-ctrl" aria-label="Zoom in"></button>');
+        $(zIn).append('<span " class="glyphicon glyphicon-plus " aria-hidden="true"></span>');
+        var zOut = $('<button title="Zoom Out" id="zoom-out-btn" type="button" class="btn btn-default z-crtl" aria-label="Zoom out" disabled="true"></button>');
+        $(zOut).append('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+        var zReset = $('<button title="Reset View" type="button" class="btn btn-default" aria-label="Reset zoom"></button>');
+        $(zReset).append('<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>');
         thisC.zoomRulers(2, 1);
         thisC.zoomRulers(1, 2);
         // setup click logic for zoom in/out/reset
@@ -36,31 +36,31 @@ define(["jquery", "mousewheel"],
         paper.project.layers[0].zoom = 1;
         paper.project.layers[1].zoom = 1;
         paper.project.layers[1].layerOffset = paper.project.layers[0].position.y - paper.project.layers[1].position.y;
-        $(zIn).on("click", function (event) {
+        $(zIn).on('click', function (event) {
           event.preventDefault();
           var oldZoom = paper.project.activeLayer.zoom;
           var newZoom = thisC.changeZoom(oldZoom, 1, paper.view.center, paper.view.center);
           thisC.zoomRulers(newZoom[0], oldZoom);
-          if ($("#popdiv").length) {
+          if ($('#popdiv').length) {
             thisC.compensateZoom(newZoom[0]);
           }
           paper.project.layers[0].center = paper.project.layers[0].position;
           paper.view.draw();
         });
 
-        $(zOut).on("click", function (event) {
+        $(zOut).on('click', function (event) {
           event.preventDefault();
           var oldZoom = paper.project.layers[0].zoom;
           var newZoom = thisC.changeZoom(oldZoom, -1, paper.view.center, paper.view.center);
           thisC.zoomRulers(newZoom[0], oldZoom);
-          if ($("#popdiv").length) {
+          if ($('#popdiv').length) {
             thisC.compensateZoom(newZoom[0]);
           }
           paper.project.layers[0].center = paper.project.layers[0].position;
           paper.view.draw();
         });
 
-        $(zReset).on("click", function (event) {
+        $(zReset).on('click', function (event) {
           event.preventDefault();
           var oldZoom = paper.project.layers[0].zoom;
           if (paper.project.layers[0].zoom !== 1) {
@@ -78,7 +78,7 @@ define(["jquery", "mousewheel"],
         $(zoomGroup).append(zReset);
         $(zoomGroup).append(zOut);
 
-        $("#overlay").append(zoomGroup);
+        $('#overlay').append(zoomGroup);
       },
 
       /**
@@ -92,7 +92,7 @@ define(["jquery", "mousewheel"],
         this.originalCenter = paper.project.layers[0].position;
         // Attach listener to mousewheel using jquery plugin to watch for scrollwheel zoom
         // delta means that zoom will center around the mouse pointer	
-        $("#cvit-canvas").mousewheel(function (event) {
+        $('#cvit-canvas').mousewheel(function (event) {
           var mousePos = new paper.Point(event.offsetX, event.offsetY);
           var viewPos = paper.project.layers[0].globalToLocal(mousePos);
           var originalZoom = paper.project.layers[0].zoom;
@@ -100,7 +100,7 @@ define(["jquery", "mousewheel"],
           paper.project.layers[0].zoom = newZoom[0];
           // popdiv is the div that contains the popover that contains feature information
           // need to reposition it as the view changes, as it is an overlay, not part of canvas.
-          if ($("#popdiv").length) {
+          if ($('#popdiv').length) {
             thisC.compensateZoom(newZoom[0]);
           }
           event.preventDefault();
@@ -113,20 +113,20 @@ define(["jquery", "mousewheel"],
         var panTool = new paper.Tool();
 
         panTool.onMouseDown = function () {
-          document.body.style.cursor = "move";
+          document.body.style.cursor = 'move';
           panTool.path = new paper.Point();
           panTool.path.add(paper.project.layers[0].position);
         };
 
         panTool.onMouseUp = function () {
-          document.body.style.cursor = "default";
+          document.body.style.cursor = 'default';
           paper.project.layers[0].center = paper.project.layers[0].position;
         };
 
         panTool.onMouseDrag = function (event) {
           thisC.changePan(event.downPoint, event.point, startView);
           event.preventDefault();
-          if ($("#popdiv").length) {
+          if ($('#popdiv').length) {
             thisC.compensateZoom(paper.project.layers[0].zoom);
           }
           paper.view.draw();
@@ -141,18 +141,18 @@ define(["jquery", "mousewheel"],
         };
 
         boxTool.onMouseDrag = function (event) {
-          document.body.style.cursor = "zoom-in";
+          document.body.style.cursor = 'zoom-in';
           boxTool.box.remove();
           boxTool.box = paper.Path.Rectangle(event.downPoint, event.point);
           boxTool.box.strokeWidth = 1;
-          boxTool.box.strokeColor = "lightblue";
+          boxTool.box.strokeColor = 'lightblue';
           boxTool.box.dashArray = [2, 2];
           boxTool.box.fillColor = new paper.Color(0.8, 0.3);
           boxTool.drag = true;
         };
 
         boxTool.onMouseUp = function () {
-          document.body.style.cursor = "default";
+          document.body.style.cursor = 'default';
           if (boxTool.drag) {
             var viewSize = paper.project.view.size;
             var boxSize = boxTool.box.handleBounds.size;
@@ -245,15 +245,15 @@ define(["jquery", "mousewheel"],
        */
 
       compensateZoom: function (zoom) {
-        var popdiv = $("#popdiv");
-        var divData = popdiv.data("pos");
-        var bounds = popdiv.data("item").bounds;
+        var popdiv = $('#popdiv');
+        var divData = popdiv.data('pos');
+        var bounds = popdiv.data('item').bounds;
         popdiv.show();
-        popdiv.css("top", (divData.y + Math.round(bounds.y - divData.y)));
-        popdiv.css("left", (divData.x + Math.round(bounds.x - divData.x)));
-        popdiv.css("width", divData.width * zoom);
-        popdiv.css("height", divData.height * zoom);
-        $(".popover").popover("show");
+        popdiv.css('top', (divData.y + Math.round(bounds.y - divData.y)));
+        popdiv.css('left', (divData.x + Math.round(bounds.x - divData.x)));
+        popdiv.css('width', divData.width * zoom);
+        popdiv.css('height', divData.height * zoom);
+        $('.popover').popover('show');
         popdiv.hide();
 
       },
@@ -269,14 +269,14 @@ define(["jquery", "mousewheel"],
       zoomRulers: function (newZoom, oldZoom) {
         // enable/disable zoom controls
         if (newZoom <= 1) {
-          $("#zoom-out-btn").prop("disabled", true);
-          $("#zoom-in-btn").prop("disabled", false);
+          $('#zoom-out-btn').prop('disabled', true);
+          $('#zoom-in-btn').prop('disabled', false);
         } else if (8 <= newZoom) {
-          $("#zoom-out-btn").prop("disabled", false);
-          $("#zoom-in-btn").prop("disabled", true);
+          $('#zoom-out-btn').prop('disabled', false);
+          $('#zoom-in-btn').prop('disabled', true);
         } else {
-          $("#zoom-out-btn").prop("disabled", false);
-          $("#zoom-in-btn").prop("disabled", false);
+          $('#zoom-out-btn').prop('disabled', false);
+          $('#zoom-in-btn').prop('disabled', false);
         }
 
         // Zoom ruler and drawing layer, layer[0] is drawing, [1] is ruler

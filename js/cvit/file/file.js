@@ -7,7 +7,7 @@
  * @module file
  */
 
-define(["jquery", "json!cvitjs/ConfDefault.json"],
+define(['jquery', 'json!cvitjs/ConfDefault.json'],
   function ($, defaultConf) {
 
     // noinspection JSUnusedGlobalSymbols
@@ -27,21 +27,21 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
       getFile: function (filePath, useDefault) {
         var thisC = this;
         return $.ajax({
-          method: "GET",
+          method: 'GET',
           url: filePath,
-          dataType: "text",
+          dataType: 'text',
           error: function (err) {
-            console.error("CViTjs: Unable to open " + filePath, err);
+            console.error('CViTjs: Unable to open ' + filePath, err);
           }
         }).then(function (result) {
           var extention = thisC.getFormat(filePath);
           if (extention) {
             return thisC.parse[extention](result, useDefault);
           } else {
-            throw new Error("CViTjs: " + filePath + " is not of a supported file type.");
+            throw new Error('CViTjs: ' + filePath + ' is not of a supported file type.');
           }
         }, function () {
-          return "failed";
+          return 'failed';
         });
       },
 
@@ -87,11 +87,11 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
           // if it is, do nothing, otherwise break up current line by tabs and
           // read into parsef File object. forEach is used for readability, can be
           // replaced by a for loop for performance.
-          var gff = gffBase.split("\n");
+          var gff = gffBase.split('\n');
           gff.forEach(
             function (element) {
               if (element.match(/^[^#]/)) {
-                element = element.split("\t");
+                element = element.split('\t');
                 gffLine = {
                   seqName: element[0],
                   source: element[1],
@@ -107,11 +107,11 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
                   // this function is self-invoking
                   attribute: (
                     function () {
-                      var attributes = element[8].split(";");
+                      var attributes = element[8].split(';');
                       var test = {};
                       attributes.forEach(
                         function (attribute) {
-                          attribute = attribute.split("=");
+                          attribute = attribute.split('=');
                           attribute[0] = attribute[0].toLowerCase();
                           test[attribute[0]] = attribute[1];
                         });
@@ -145,11 +145,11 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
           // if it is, do nothing, otherwise break up current line by tabs and
           // read into parsef File object. forEach is used for readability, can be
           // replaced by a for loop for performance.
-          var csv = csvBase.split("\n");
+          var csv = csvBase.split('\n');
           csv.forEach(
             function (element) {
               if (element.match(/^[^#]/)) {
-                element = element.split(",");
+                element = element.split(',');
                 parsedFile.push({
                   seqName: element[0],
                   source: element[1],
@@ -165,11 +165,11 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
                   // this function is self-invoking
                   attribute: (
                     function () {
-                      var attributes = element[8].split(";");
+                      var attributes = element[8].split(';');
                       var test = {};
                       attributes.forEach(
                         function (attribute) {
-                          attribute = attribute.split("=");
+                          attribute = attribute.split('=');
                           test[attribute[0]] = attribute[1];
                         });
                       return test;
@@ -191,9 +191,9 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
 
         conf: function (confBase, useDefault) {
           var parsedFile = useDefault ? defaultConf : {};
-          var currentConfigKey = "";
+          var currentConfigKey = '';
           var confItem = {};
-          var conf = confBase.split("\n");
+          var conf = confBase.split('\n');
           conf.forEach(function (element) {
             if (element.match(/^[^#;]/)) {
               var match = element.match(/\[(.*)]/);
@@ -201,8 +201,8 @@ define(["jquery", "json!cvitjs/ConfDefault.json"],
                 currentConfigKey = match[1];
                 parsedFile[currentConfigKey] = parsedFile[currentConfigKey] === undefined ? {} : parsedFile[currentConfigKey];
               } else {
-                confItem = element.split("=");
-                if (confItem[1] && confItem[1].trim() !== "") {
+                confItem = element.split('=');
+                if (confItem[1] && confItem[1].trim() !== '') {
                   parsedFile[currentConfigKey][confItem[0].trim()] = confItem[1].trim();
                 }
               }

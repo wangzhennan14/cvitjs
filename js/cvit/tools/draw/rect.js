@@ -6,7 +6,7 @@
  */
 
 
-define(["bootstrap"],
+define(['bootstrap'],
   function () {
     return /** @alias module:tools/draw/rect */ {
 
@@ -32,7 +32,7 @@ define(["bootstrap"],
         };
 
         rectTool.onMouseDrag = function (event) {
-          document.body.style.cursor = "crosshair";
+          document.body.style.cursor = 'crosshair';
           rectTool.box.remove();
           rectTool.box = paper.Path.Rectangle(event.downPoint, event.point);
           rectTool.box.strokeWidth = 2;
@@ -43,7 +43,7 @@ define(["bootstrap"],
         };
 
         rectTool.onMouseUp = function () {
-          document.body.style.cursor = "default";
+          document.body.style.cursor = 'default';
         };
       }
     };

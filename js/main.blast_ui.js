@@ -14,8 +14,8 @@
  */
 // TODO: Use require text module to start by reading in configuration text
 
-require(["cvit/cvit", "cvit/file/file", "draw/glyph/glyph"], function (cvit, file, glyph) {
-  console.log("CViTjs: Starting CViTJS");
+require(['cvit/cvit', 'cvit/file/file', 'draw/glyph/glyph'], function (cvit, file, glyph) {
+  console.log('CViTjs: Starting CViTJS');
   // cvit.init(dataset) to have the provided dataset
   //override defaults or URI string
   // cvit.init returns the backbone group of the async
@@ -32,12 +32,12 @@ require(["cvit/cvit", "cvit/file/file", "draw/glyph/glyph"], function (cvit, fil
         // name provided by the BLAST gff, and strips off extra identifiers
         // makes the assumption that the BLAST provided information is longer
         // then the chromosome names used for the backbone
-        var labLen = cvit.data.chromosome.maxSeq.split(".").length;
+        var labLen = cvit.data.chromosome.maxSeq.split('.').length;
         var blastData = data[cvit.conf.blast.dataLoc];
         blastData.features.forEach(function (element) {
-          var rework = element.seqName.split(".");
+          var rework = element.seqName.split('.');
           var len = rework.length;
-          element.seqName = rework.slice(len - labLen).join(".");
+          element.seqName = rework.slice(len - labLen).join('.');
         });
         paper.view.draw();
         paper.project.layers[0].children[0].remove();
@@ -46,11 +46,11 @@ require(["cvit/cvit", "cvit/file/file", "draw/glyph/glyph"], function (cvit, fil
             paper.view.draw();
           },
           function (err) {
-            console.error("CViTjs: Unable to draw blast hits.", err);
+            console.error('CViTjs: Unable to draw blast hits.', err);
           });
       },
       function (err) {
-        console.error("CViTjs: Unable to load blast gff", err);
+        console.error('CViTjs: Unable to load blast gff', err);
       });
   });
 });

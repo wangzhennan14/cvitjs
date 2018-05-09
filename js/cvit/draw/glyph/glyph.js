@@ -6,7 +6,7 @@
  */
 
 
-define(["require", "jquery", "glyph/utilities"],
+define(['require', 'jquery', 'glyph/utilities'],
   function (require, $, utility) {
 
     return /** @alias module:draw/glyph */ {
@@ -30,7 +30,7 @@ define(["require", "jquery", "glyph/utilities"],
         var thisC = this;
         var groupName = view.viewName;
         var deferred = new $.Deferred();
-        var myGlyph = "glyph/" + config[groupName].glyph + "/" + config[groupName].shape;
+        var myGlyph = 'glyph/' + config[groupName].glyph + '/' + config[groupName].shape;
         $.when({
           key: config[groupName].glyph,
           groupName: groupName,
@@ -65,12 +65,12 @@ define(["require", "jquery", "glyph/utilities"],
         var view = viewSettings.view;
         view.key = viewSettings.key;
         view.groupName = viewSettings.groupName;
-        console.log("CViTjs: Drawing " + view.groupName);
+        console.log('CViTjs: Drawing ' + view.groupName);
         glyphGroup.name = view.groupName;
         console.log(glyphGroup);
         view.config = view.key === view.groupName ? config[view.key] : thisC.mergeConfig(config[view.key], config[view.groupName]);
         view.zoom = view.yScale;
-        view.pileup = typeof(view.config.pileup_gap) !== "undefined" ? parseInt(view.config.pileup_gap) : 0;
+        view.pileup = typeof(view.config.pileup_gap) !== 'undefined' ? parseInt(view.config.pileup_gap) : 0;
         view.context = thisC;
         view.centWidth = view.chromWidth + (2 * parseInt(config.centromere.centromere_overhang));
         locations.forEach(function (loc) {

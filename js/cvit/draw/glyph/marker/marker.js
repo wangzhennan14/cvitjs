@@ -6,7 +6,7 @@
  */
 
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
 
     return /** @alias module:draw/glyph/marker */ {
@@ -15,7 +15,7 @@ define(["jquery", "glyph/utilities"],
        *
        */
       test: function () {
-        console.log("Test of marker glyph");
+        console.log('Test of marker glyph');
       },
 
       /**
@@ -35,7 +35,7 @@ define(["jquery", "glyph/utilities"],
             var g = new paper.Group();
             g.name = gName;
             var labelGroup = new paper.Group();
-            labelGroup.name = gName + "-label";
+            labelGroup.name = gName + '-label';
             targetGroup.addChild(g);
             g.addChild(labelGroup);
           }
@@ -49,9 +49,9 @@ define(["jquery", "glyph/utilities"],
           var r = new paper.Path.Line(point, new paper.Point(point.x + featureWidth, point.y));
 
           r.strokeWidth = 2;
-          marker.name = marker.attribute.name ? marker.attribute.name : "";
+          marker.name = marker.attribute.name ? marker.attribute.name : '';
           r.info = marker.attribute;
-          r.thisColor = "black";
+          r.thisColor = 'black';
           var strokeColor = r.info.color ? r.info.color : view.config.color;
           r.strokeColor = utility.formatColor(strokeColor);
           r.onMouseDown = function () {
@@ -61,7 +61,7 @@ define(["jquery", "glyph/utilities"],
           if (parseInt(view.config.draw_label) === 1) {
             point.y = r.position.y;
             var label = utility.generateLabel(r, view, targetGroup.children[target]);
-            featureGroup.children[gName + "-label"].addChild(label);
+            featureGroup.children[gName + '-label'].addChild(label);
             label.bringToFront();
           }
           featureGroup.addChild(r);

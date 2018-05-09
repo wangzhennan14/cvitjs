@@ -7,7 +7,7 @@
  */
 
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
     return /** @alias module:draw/glyph/position/rect */ {
 
@@ -17,7 +17,7 @@ define(["jquery", "glyph/utilities"],
        */
 
       test: function () {
-        console.log("Test of position class");
+        console.log('Test of position class');
       },
 
       /**
@@ -52,9 +52,9 @@ define(["jquery", "glyph/utilities"],
           var rectangle = new paper.Rectangle(point, size);
           var r = new paper.Path.Rectangle(rectangle);
 
-          position.name = position.attribute.name ? position.attribute.name : "";
+          position.name = position.attribute.name ? position.attribute.name : '';
           r.info = position.attribute;
-          r.thisColor = "black";
+          r.thisColor = 'black';
           var fillColor = position.attribute.color ? position.attribute.color : view.config.color;
           r.fillColor = utility.formatColor(fillColor);
           r.onMouseDown = function () {

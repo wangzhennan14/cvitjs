@@ -7,7 +7,7 @@
  */
 
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
 
     return /** @alias module:draw/glyph/range */ {
@@ -17,7 +17,7 @@ define(["jquery", "glyph/utilities"],
        */
 
       test: function () {
-        console.log("Test of range glyph");
+        console.log('Test of range glyph');
       },
 
       /**
@@ -38,7 +38,7 @@ define(["jquery", "glyph/utilities"],
             var g = new paper.Group();
             g.name = gGroup;
             var labelGroup = new paper.Group();
-            labelGroup.name = gGroup + "-label";
+            labelGroup.name = gGroup + '-label';
             targetGroup.addChild(g);
             g.addChild(labelGroup);
           }
@@ -53,22 +53,22 @@ define(["jquery", "glyph/utilities"],
           var rectangle = new paper.Rectangle(point, size);
           var r = new paper.Path.Rectangle(rectangle);
 
-          range.name = range.attribute.name ? range.attribute.name : "";
+          range.name = range.attribute.name ? range.attribute.name : '';
           r.info = range.attribute;
-          r.thisColor = "black";
+          r.thisColor = 'black';
           var fillColor = r.info.color ? r.info.color : view.config.color;
           r.fillColor = utility.formatColor(fillColor);
           r.onMouseDown = function () {
             utility.attachPopover(r, range);
           };
-          console.log("rangeTest",view,r,featureGroup);
+          console.log('rangeTest', view, r, featureGroup);
           if (parseInt(view.config.enable_pileup) === 1) {
             utility.testCollision(r, featureGroup, view);
           }
           if (parseInt(view.config.draw_label) === 1) {
             point.y = r.position.y;
             var label = utility.generateLabel(r, view, targetGroup.children[target]);
-            featureGroup.children[gGroup + "-label"].addChild(label);
+            featureGroup.children[gGroup + '-label'].addChild(label);
             label.bringToFront();
           }
           featureGroup.addChild(r);

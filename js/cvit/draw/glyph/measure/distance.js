@@ -7,7 +7,7 @@
 
 
 
-define(["jquery", "glyph/utilities"],
+define(['jquery', 'glyph/utilities'],
   function ($, utility) {
 
     return /** @alias module:draw/glyph/measure/range */ {
@@ -17,7 +17,7 @@ define(["jquery", "glyph/utilities"],
        */
 
       test: function () {
-        console.log("Test of range glyph");
+        console.log('Test of range glyph');
       },
 
       /**

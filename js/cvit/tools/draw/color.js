@@ -6,7 +6,7 @@
  */
 
 
-define(["jquery", "bootstrap"],
+define(['jquery', 'bootstrap'],
   function ($) {
     return /** @alias module:tools/draw/color */{
 
@@ -19,16 +19,16 @@ define(["jquery", "bootstrap"],
        */
 
       addColorSel: function (id, use) {
-        var modId = id + "-select";
-        var colorModal = $("<div id=\"" + modId + "\" class=\"modal fade\" role=\"dialog\"><div class=\"modal-dialog\">" +
-          "<div class=\"modal-content\"><div class=\"modal-header\"><button type=\"button\" class=\"close mod-dis\"" +
-          " data-dismiss=\"modal\">&times;</button><h4 class=\"modal-title\"></h4></div>" +
-          "<div class=\"modal-body\"></div><div class=\"modal-footer\"><button type=\"button\" " +
-          "id=\"pick-low\" class=\"btn btn-default mod-dis\" data-dismiss=\"modal\">Close</button></div></div></div></div>"
+        var modId = id + '-select';
+        var colorModal = $('<div id="' + modId + '" class="modal fade" role="dialog"><div class="modal-dialog">' +
+          '<div class="modal-content"><div class="modal-header"><button type="button" class="close mod-dis"' +
+          ' data-dismiss="modal">&times;</button><h4 class="modal-title"></h4></div>' +
+          '<div class="modal-body"></div><div class="modal-footer"><button type="button" ' +
+          'id="pick-low" class="btn btn-default mod-dis" data-dismiss="modal">Close</button></div></div></div></div>'
         );
-        $("#cvit-div").append(colorModal);
-        $("#" + modId + " .modal-title").text("Choose " + use + " Color");
-        $("#" + modId + " .modal-body").html("<div><canvas id='" + modId + "-canvas' width='500' height='200'></canvas></div>");
+        $('#cvit-div').append(colorModal);
+        $('#' + modId + ' .modal-title').text('Choose ' + use + ' Color');
+        $('#' + modId + ' .modal-body').html('<div><canvas id=\'' + modId + '-canvas\' width=\'500\' height=\'200\'></canvas></div>');
         //	return colorModal;
       },
 
@@ -44,13 +44,13 @@ define(["jquery", "bootstrap"],
         // disable tool in new window and save base view for later;
         var toolIndex = paper.tool._index;
         paper.tool = undefined;
-        var modId = id + "-select";
-        $("#" + modId + " .modal-body").html("<div><canvas id='" + modId + "-canvas' width='500' height='200'></canvas></div>");
+        var modId = id + '-select';
+        $('#' + modId + ' .modal-body').html('<div><canvas id=\'' + modId + '-canvas\' width=\'500\' height=\'200\'></canvas></div>');
         var baseScope = paper.project;
         if (paper.projects[1]) {
           paper.projects[1].remove();
         }
-        paper.setup(modId + "-canvas");
+        paper.setup(modId + '-canvas');
         paper.project.canvas = modId;
 
         // setup hue and brightness selection box
@@ -64,12 +64,12 @@ define(["jquery", "bootstrap"],
           bottomRight: bottomRight,
           fillColor: {
             gradient: {
-              stops: ["#F00", "#FF0", "#0F0", "#0FF", "#00F", "#F0F", "#F00"]
+              stops: ['#F00', '#FF0', '#0F0', '#0FF', '#00F', '#F0F', '#F00']
             },
             origin: topLeft,
             destination: topRight
           },
-          strokeColor: "black",
+          strokeColor: 'black',
           strokeWidth: 1
         });
 
@@ -92,8 +92,8 @@ define(["jquery", "bootstrap"],
         var sRad = new paper.Path.Rectangle({
           topLeft: topLeft,
           bottomRight: bottomRight,
-          fillColor: "black",
-          strokeColor: "black",
+          fillColor: 'black',
+          strokeColor: 'black',
           strokeWidth: 1
         });
         var sGra = sRad.clone();
@@ -119,7 +119,7 @@ define(["jquery", "bootstrap"],
             origin: topRight,
             destination: bottomRight
           },
-          strokeColor: "black",
+          strokeColor: 'black',
           strokeWidth: 1
         });
 
@@ -128,8 +128,8 @@ define(["jquery", "bootstrap"],
         var colBox = new paper.Path.Rectangle({
           topLeft: [10, 140],
           bottomRight: bottomRight.add([0, 60]),
-          fillColor: "white",
-          strokeColor: "black",
+          fillColor: 'white',
+          strokeColor: 'black',
           strokeWidth: 1
 
         });
@@ -144,14 +144,14 @@ define(["jquery", "bootstrap"],
               radius: 10
             })
           ],
-          fillColor: "black"
+          fillColor: 'black'
         });
 
         var colPrev = new paper.Path.Rectangle({
           topLeft: [10, 140],
           bottomRight: bottomRight.add([0, 60]),
-          fillColor: "black",
-          strokeColor: "black",
+          fillColor: 'black',
+          strokeColor: 'black',
           strokeWidth: 1
 
         });
@@ -168,7 +168,7 @@ define(["jquery", "bootstrap"],
               to: [30, 25]
             })
           ],
-          strokeColor: "black"
+          strokeColor: 'black'
         });
         pointer.strokeColor = new paper.Color(0.6);
         pointer.position = pGra.bounds.bottomRight;
@@ -178,7 +178,7 @@ define(["jquery", "bootstrap"],
         var w = new paper.Size(25, 10);
         var sSlide = new paper.Path.Rectangle(q, w);
         sSlide.fillColor = new paper.Color(0.6);
-        sSlide.strokeColor = "black";
+        sSlide.strokeColor = 'black';
         sSlide.strokeWidth = 1;
         sSlide.position = sGra.position;
         sSlide.position.y = sGra.bounds.topLeft.y;
@@ -213,12 +213,12 @@ define(["jquery", "bootstrap"],
           colPrev.fillColor = prev;
           paper.view.draw();
           console.log(button);
-          $(button).css("background", colPrev.fillColor.toCSS());
+          $(button).css('background', colPrev.fillColor.toCSS());
 
         }
 
         // Setup what happens when you hide the modal
-        $("#" + modId).on("hidden.bs.modal", function () {
+        $('#' + modId).on('hidden.bs.modal', function () {
           paper.tools[toolIndex].activate();
           baseScope.activate();
           console.log(id);

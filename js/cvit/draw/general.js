@@ -6,7 +6,7 @@
  */
 
 
-define(["require", "jquery", "draw/rulers/rulers"],
+define(['require', 'jquery', 'draw/rulers/rulers'],
   function (require, $, rulers) {
 
     return /** @alias module:draw */{
@@ -32,7 +32,7 @@ define(["require", "jquery", "draw/rulers/rulers"],
           size: [paper.view.size.width, paper.view.size.height],
           selected: true
         });
-        background.fillColor = "white";
+        background.fillColor = 'white';
 
         if (config.general.border_width > 0) {
           background.strokeColor = new paper.Color(config.general.border_color);
@@ -41,7 +41,7 @@ define(["require", "jquery", "draw/rulers/rulers"],
 
         // Set and place title
         if (config.general.title) {
-          console.log("CViTjs: Setting title");
+          console.log('CViTjs: Setting title');
           var cvitTitle = config.general.title.split(/<[\/i]+>/);
           var titleLoc;
           var titleSize = parseInt(config.general.title_font_size);
@@ -60,25 +60,25 @@ define(["require", "jquery", "draw/rulers/rulers"],
             }
           }
           titleLoc = new paper.Point(titleX, titleY);
-          console.log("Title lengtht: " + cvitTitle.length);
+          console.log('Title lengtht: ' + cvitTitle.length);
           for (var i = 0; i < cvitTitle.length; i++) {
             var title = new paper.PointText(titleLoc);
             title.content = cvitTitle[i];
             title.fontSize = titleSize;
-            title.fontWeight = (i % 2) === 1 ? "Italic" : "normal";
+            title.fontWeight = (i % 2) === 1 ? 'Italic' : 'normal';
             //console.log( 'tc: ' + config.general.title_color );
             title.fillColor = new paper.Color(config.general.title_color);
             titleLoc.x += title.strokeBounds.width;
           }
           //title.name = 'cvitTitle';
         }
-        console.log("CViTjs: Setting rulers");
+        console.log('CViTjs: Setting rulers');
         rulers.draw(data.chromosome, config, view);
 
         var rFSize = parseInt(config.general.ruler_font_size);
         view.xOffset += parseInt(config.general.tick_line_width) + (data.chromosome.max.toString().length * rFSize);
         var deferred = new $.Deferred();
-        var myGlyph = "glyph/" + config.general.glyph + "/" + config.general.shape;
+        var myGlyph = 'glyph/' + config.general.glyph + '/' + config.general.shape;
         require([myGlyph], function (myGlyph) {
           deferred.resolve(myGlyph.draw(data, config, view)).done(function () {
             background.sendToBack();

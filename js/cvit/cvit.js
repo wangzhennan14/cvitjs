@@ -14,7 +14,7 @@
 // note here that domReady! means that cvit.js won't be called until after the
 // dom is ready to be manipulated.
 
-define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", "draw/glyph/glyph", "text!../../cvit.conf", "tools/zoom/zoom", "mousewheel", "domReady!"],
+define(['jquery', 'paper', 'cvit/file/file', 'cvit/menu/menus', 'draw/general', 'draw/glyph/glyph', 'text!../../cvit.conf', 'tools/zoom/zoom', 'mousewheel', 'domReady!'],
   function ($, paper, file, menu, general, glyph, cvitConf, zoom) {
 
     return /** @alias: module:cvit */ {
@@ -48,57 +48,59 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
         try {
           locations = thisC.getSettings(gConf, dataset);
         } catch (err) {
-          console.error("CViTjs: Unable to load configuration information", err);
+          console.error('CViTjs: Unable to load configuration information', err);
         }
         thisC.dataset = locations[1];
         locations = locations[0];
         viewConf = locations.conf;
         defaultData = locations.defaultData;
 
-        console.log("CViTjs: Initializing Canvas");
+        console.log('CViTjs: Initializing Canvas');
         // Add canvas element to page
         try {
-          var canvas = "<canvas id=\"cvit-canvas\" style=\"background-color:#6f6f6f;\"  resize>";
-          var overlay = $("<div id=\"overlay\" class=\"hover_div\" style=\"position:absolute; display:block;\">");
+          var canvas = '<canvas id="cvit-canvas" style="background-color:#6f6f6f;"  resize>';
+          var overlay = $('<div id="overlay" class="hover_div" style="position:absolute; display:block;">');
           var cHeight = 500;
           var cWidth = 1000;
-          if (gConf["data." + thisC.dataset].width !== undefined) {
-            cWidth = parseInt(gConf["data." + thisC.dataset].width);
+          if (gConf['data.' + thisC.dataset].width !== undefined) {
+            cWidth = parseInt(gConf['data.' + thisC.dataset].width);
           } else if (gConf.general.width !== undefined) {
             cWidth = parseInt(gConf.general.width);
           }
-          if (gConf["data." + thisC.dataset].height !== undefined) {
-            cHeight = parseInt(gConf["data." + thisC.dataset].height);
+          if (gConf['data.' + thisC.dataset].height !== undefined) {
+            cHeight = parseInt(gConf['data.' + thisC.dataset].height);
           } else if (gConf.general.height !== undefined) {
             cHeight = parseInt(gConf.general.height);
           }
-          $(canvas).css("position", "absolute");
-          $("#cvit-div").css("position", "relative").append(overlay).append(canvas);
-          $("#cvit-canvas").width(cWidth).height(cHeight).css("background-color", "white");
-          paper.setup("cvit-canvas");
+          $(canvas).css('position', 'absolute');
+          $('#cvit-div').css('position', 'relative').append(overlay).append(canvas);
+          $('#cvit-canvas').width(cWidth).height(cHeight).css('background-color', 'white');
+          paper.setup('cvit-canvas');
         } catch (err) {
-          console.error("CViTjs: Was not able to find canvas.", err);
+          console.error('CViTjs: Was not able to find canvas.', err);
         }
         // cleans up paths based on the require baseURL found in require-config.js
         // used for when your url root isn't the same as your CViT root (embedded in page)
-        var cvitBase = require.toUrl("").split("/");
-        cvitBase.splice(cvitBase.length - 3, 3);
-        cvitBase = cvitBase.length > 0 ? cvitBase.join("\/") + "/" : "";
+        var cvitBase = require.toUrl('').split('/');
+        console.log("configuration of view", cvitBase,viewConf);
+        cvitBase.splice(cvitBase.length - 2, 2);
+        console.log("configuration of view", cvitBase,viewConf);
+        cvitBase = cvitBase.length > 0 ? cvitBase.join('\/') + '/' : '';
         viewConf = cvitBase + viewConf;
         defaultData = cvitBase + defaultData;
         // read view configuration and baseGff (ASYNC)
         // .then(success,failure)
         var readConfig = file.getFile(viewConf, true).then(
           function (result) {
-            console.log("CViTjs: Successfully loaded configuration.");
+            console.log('CViTjs: Successfully loaded configuration.');
             thisC.conf = result;
           },
           function (err) {
-            console.error("CViTjs: Unable to load configuration", err);
+            console.error('CViTjs: Unable to load configuration', err);
           });
         var readChromosome = file.getFile(defaultData).then(
           function (result) {
-            console.log("CViTjs: Successfully loaded backbone data.");
+            console.log('CViTjs: Successfully loaded backbone data.');
             // integrate additional data in with the base data if supplied
             if (addData !== undefined) {
               for (var key in addData) {
@@ -114,17 +116,17 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
             thisC.data = result;
           },
           function (err) {
-            console.error("CViTjs: Unable to load backbone data.", err);
+            console.error('CViTjs: Unable to load backbone data.', err);
           });
         var backbone;
         backbone = $.when(readChromosome, readConfig).then(
           function () {
             if (thisC.data.chromosome === undefined || thisC.data.chromosome === null) {
-              throw new Error("CViTjs: Error: No chromosome data loaded.");
+              throw new Error('CViTjs: Error: No chromosome data loaded.');
             }
             // set glyphs for the data sections in the form glyph:display.
             thisC.view.setGlyphs.call(thisC);
-            console.log("CViTjs: Drawing requested view.");
+            console.log('CViTjs: Drawing requested view.');
             var chrom = thisC.data.chromosome;
             var bounds = thisC.view.getBounds(chrom);
             chrom.min = bounds.min;
@@ -139,10 +141,10 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
             thisC.data.zoom = thisC.view.setZoom(thisC.data.chromosome.min, thisC.data.chromosome.max);
             //actually draw the darn glyohs
             var cvitView = new paper.Group();
-            cvitView.name = "backbone";
+            cvitView.name = 'backbone';
             var group = general.drawGlyph(thisC.data, thisC.conf, thisC.viewInfo).then(function (group) {
               paper.view.draw();
-              group.name = "view";
+              group.name = 'view';
               cvitView.addChild(group);
               menu.build(thisC.conf, thisC.viewInfo, group);
               paper.view.draw();
@@ -156,7 +158,7 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
                         //      paper.view.draw();
                       },
                       function (err) {
-                        console.error("CViTjs: Unable to draw glyph.", err);
+                        console.error('CViTjs: Unable to draw glyph.', err);
                       }
                     );
                   }
@@ -172,7 +174,7 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
           },
 
           function (err) {
-            console.error("CViTjs: Error with generating view.", err);
+            console.error('CViTjs: Error with generating view.', err);
           });
         return backbone;
       },
@@ -222,9 +224,9 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
           var thisC = this;
           $.each(thisC.conf, function (key) {
 
-            if (key === "general") {
-              thisC.conf[key].glyph = "chromosome";
-              thisC.conf[key].shape = "chromosome";
+            if (key === 'general') {
+              thisC.conf[key].glyph = 'chromosome';
+              thisC.conf[key].shape = 'chromosome';
             }
             if (thisC.conf[key].glyph === undefined) {
               thisC.conf[key].glyph = key;
@@ -258,7 +260,7 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
 
         setZoom: function (chromosomeMin, chromosomeMax, yOff) {
           yOff = yOff ? yOff : 50;
-          return ($("#cvit-canvas").height() - (2 * yOff)) / (chromosomeMax - chromosomeMin);
+          return ($('#cvit-canvas').height() - (2 * yOff)) / (chromosomeMax - chromosomeMin);
         }
       },
 
@@ -280,20 +282,20 @@ define(["jquery", "paper", "cvit/file/file", "cvit/menu/menus", "draw/general", 
         var confSettings;
         var confKey;
         if (dataset) {
-          confSettings = mainConf["data." + dataset];
+          confSettings = mainConf['data.' + dataset];
           confKey = dataset;
         } else if (!!data) {
-          confSettings = mainConf["data." + data[1]];
+          confSettings = mainConf['data.' + data[1]];
           confKey = data[1];
-        } else if ("general" in mainConf && "data_default" in mainConf.general) {
+        } else if ('general' in mainConf && 'data_default' in mainConf.general) {
           var default_data = mainConf.general.data_default;
-          confSettings = mainConf["data." + default_data];
+          confSettings = mainConf['data.' + default_data];
           confKey = default_data;
         }
         if (confSettings !== undefined) {
           return [confSettings, confKey];
         } else {
-          throw "Data not found";
+          throw 'Data not found';
         }
       }
     };
